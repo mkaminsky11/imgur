@@ -1,0 +1,36 @@
+{
+    "main": "index.html", 
+    "description": "", 
+    "name": "imguru", 
+    "nodejs": true, 
+    "inject-js-end": "", 
+    "webkit": {
+        "page-cache": false, 
+        "java": false, 
+        "plugin": true
+    }, 
+    "window": {
+        "fullscreen": false, 
+        "resizable": false, 
+        "title": "imguru", 
+        "always-on-top": false, 
+        "frame": true,
+        "height": 600, 
+        "min_height": 350, 
+        "visible": true, 
+        "toolbar": true, /* check this */ 
+        "min_width": 400, 
+        "position": "center", 
+        "show_in_taskbar": true, 
+        "width": 1000, 
+        "transparent": false
+    }, 
+    "version": "0.1.0", 
+    "snapshot": "", 
+    "node-main": "js/main.js", 
+    "keywords": [], 
+    "inject-js-start": "", 
+    "node-remote": "", 
+    "js-flags": "", 
+    "chromium-args": ""
+}
