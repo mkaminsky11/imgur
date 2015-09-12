@@ -6,6 +6,8 @@ var request = require('request');
 var gui = require('nw.gui');
 var code = null;
 
+var mode = "gallery";
+
 //Authorization: Bearer YOUR_ACCESS_TOKEN ... later
 
 
@@ -46,8 +48,11 @@ gallery.user_mode = false; //looking at a user
 gallery.search_mode = false; //looking at a search
 gallery.posts = []; //array of posts
 gallery.page = 0;
-gallery.waypoint = null;
-gallery.lastPostIndex = 0;
+gallery.range = {
+	start: 0,
+	end: 0
+};
+gallery.lastItem = null;
 
 gallery.getGallery = function(page, callback){
 	gallery.page = page;
@@ -76,29 +81,43 @@ gallery.setGallery = function(err, res, body){
     	if(gallery.page === 0){
     		//first page, nead to clear
     		$("#grid").html("");
-    		gallery.lastPostIndex = 0;
+    		gallery.range = {
+    			start: 0,
+    			end: 0
+    		}
     		//otherwise, will simply add to this
     	}
 
-    	gallery.lastPostIndex =  gallery.lastPostIndex + (general.numPosts(gallery.posts, gallery.lastPostIndex) - 1)
-    	for(var i = 0; i < general.numPosts(gallery.posts, gallery.lastPostIndex); i++){
-    		var post = gallery.posts[i];
-    		if(post.is_album){
-    			gallery.addGalleryAlbum(post);
-    		}
-    		else{
-    			gallery.addGalleryPost(post);
-    		}
-    	}
-    	gallery.rearm();
+    	gallery.showMore();
 	}
 	else{
 		//something went wrong
 	}
 }
 
+gallery.showMore = function(){
+	var res = general.numPosts(gallery.posts, gallery.range);
+	gallery.range = res.range;
+    for(var i = res.range.start; i < res.range.end; i++){
+    	var post = gallery.posts[i];
+    	if(post.is_album){
+    		gallery.addGalleryAlbum(post);
+    	}
+    	else{
+    		gallery.addGalleryPost(post);
+    	}
+    }
+    gallery.lastItem = [].slice.call(document.querySelectorAll('#grid .item')).reverse()[0];
+}
+
 gallery.addGalleryPost = function(post){
+	var video = false;
+	if(post.mp4){video=true}
+
 	var html = "<div class=\"item\"><img src=\"" + post.link + "\"></div>";
+	if(video==true){
+		html = "<div class=\"item\"><video loop autoplay src=\""+ post.webm +"\"></video></div>";
+	}
 	$("#grid").append(html);
 }
 
@@ -106,43 +125,36 @@ gallery.addGalleryAlbum = function(post){
 
 }
 
-gallery.rearm = function(){
-	if(gallery.waypoint !== null){gallery.waypoint.destroy()}
-	gallery.waypoint = new Waypoint({
-		element: [].slice.call(document.querySelectorAll('#grid .item')).reverse()[0],
-		handler: function(direction) {
-			//need to show some more
-			console.log(direction);
-			var more_posts = general.numPosts(gallery.posts, gallery.lastPostIndex);
-			var first_index = gallery.lastPostIndex + 1;
-			gallery.lastPostIndex =  gallery.lastPostIndex + (more_posts - 1);
-			for(var i = first_index; i < (gallery.lastPostIndex + 1); i++){
-				var post = gallery.posts[i];
-				if(post.is_album){
-					gallery.addGalleryAlbum(post);
-				}
-				else{
-					gallery.addGalleryPost(post);
-				}
-			}
-			gallery.rearm();
-		}
-	});
-}
-
 
 
 var general = {};
-general.numPosts = function(array, lastIndex){
-	//for now...
-	var amount_left = (array.length - lastIndex) -1;
-	if(10 > amount_left){
-		return amount_left;
+general.numPosts = function(array, range){
+	//how many posts to add
+	var start = range.start;
+	var end = range.end;
+	var ideal = 10;
+	var amount_left = array.length - start;
+	var num = ideal;
+	if(amount_left < ideal){
+		num = amount_left;
 	}
-	return 10;
+	amount_left -= num;
+	var end = false;
+	if(amount_left === 0){
+		end = true;
+	}
+	var start_index = range.end + 1;
+	var end_index = range.end + num;
+	var ret = {
+		reached_end: end,
+		range: {
+			start: start_index,
+			end: end_index
+		},
+		num: num
+	}
+	return ret;
 }
-
-
 
 var album = {};
 album.id = null;
@@ -163,3 +175,10 @@ album.getAlbum = function(albumId, page, callback){
 INIT
 *******/
 gallery.getGallery(0, gallery.setGallery);
+$("#main").scroll(function(){
+	if(mode === "gallery"){
+		if(gallery.lastItem !== null && $(gallery.lastItem).visible(true) === true){
+			gallery.showMore();
+		}
+	}
+});
