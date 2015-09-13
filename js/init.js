@@ -11,7 +11,7 @@ var mode = "gallery";
 //Authorization: Bearer YOUR_ACCESS_TOKEN ... later
 
 
-
+//TODO: albums
 
 var auth = {};
 auth.window = null;
@@ -114,10 +114,15 @@ gallery.addGalleryPost = function(post){
 	var video = false;
 	if(post.mp4){video=true}
 
-	var html = "<div class=\"item\"><img src=\"" + post.link + "\"></div>";
+	var img = "<img src=\"" + post.link + "\">";
 	if(video==true){
-		html = "<div class=\"item\"><video loop autoplay src=\""+ post.webm +"\"></video></div>";
+		img = "<video loop autoplay src=\""+ post.webm +"\"></video>";
 	}
+
+	var data = "<div>data will go here</div>";
+	var title = "<h4 class=\"title\">" + post.title + "</h4>";
+	var html = "<div class=\"item\">" + title + "<div class=\"img\">" + img + "</div><div class=\"data\">"+ data +"</div></div>";
+
 	$("#grid").append(html);
 }
 
