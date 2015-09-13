@@ -114,14 +114,20 @@ gallery.addGalleryPost = function(post){
 	var video = false;
 	if(post.mp4){video=true}
 
-	var img = "<img src=\"" + post.link + "\">";
+	//var img = "<div class=\"img\" style=\"background: url(" + post.link + ") no-repeat center center fixed\"></div>";
+	var height = post.height * (240 / post.width); //proportions!
+	var img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link + "\"></div>";
 	if(video==true){
-		img = "<video loop autoplay src=\""+ post.webm +"\"></video>";
+		img = "<div class=\"img\" style=\"height:"+ height + "px\"><video loop autoplay src=\""+ post.webm +"\"></video></div>";
 	}
 
-	var data = "<div>data will go here</div>";
+	var data = "<div class=\"data\">data will go here</div>";
 	var title = "<h4 class=\"title\">" + post.title + "</h4>";
-	var html = "<div class=\"item\">" + title + "<div class=\"img\">" + img + "</div><div class=\"data\">"+ data +"</div></div>";
+	var blur = "";
+	if(height > 200){
+		blur = "<div class=\"blur\"></div>";
+	}
+	var html = "<div class=\"item\">" + title + img + blur + data + "</div>";
 
 	$("#grid").append(html);
 }

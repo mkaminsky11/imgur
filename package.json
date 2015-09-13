@@ -10,19 +10,15 @@
         "plugin": true
     }, 
     "window": {
-        "fullscreen": false, 
-        "resizable": false, 
         "title": "imguru", 
-        "always-on-top": false, 
         "frame": true,
         "height": 600, 
-        "min_height": 350, 
         "visible": true, 
         "toolbar": true, /* check this */ 
         "min_width": 400, 
         "position": "center", 
         "show_in_taskbar": true, 
-        "width": 1000, 
+        "width": 1200, 
         "transparent": false
     }, 
     "version": "0.1.0", 
