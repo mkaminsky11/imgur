@@ -72,10 +72,9 @@ gallery.type_sort = [
 ];
 
 gallery.getGallery = function(page, callback){
-	gallery.page = page;
 	if(gallery.user_mode === false && gallery.search_mode === false){
     	request({
-      		url: ("https://api.imgur.com/3/gallery/"+gallery.type+"/"+gallery.sort+"/0.json?page=" + page),
+      		url: ("https://api.imgur.com/3/gallery/"+gallery.type+"/"+gallery.sort+"/"+page+".json"),
       		headers: {
         		"Authorization": authorization
       		}
@@ -95,14 +94,10 @@ gallery.setGallery = function(err, res, body){
 	var json = JSON.parse(body).data;
     if(!err){
     	gallery.posts = json;
-    	if(gallery.page === 0){
-    		//first page, nead to clear
-    		$("#grid").html("");
-    		gallery.range = {
-    			start: 0,
-    			end: 0
-    		}
-    		//otherwise, will simply add to this
+    	$("#grid").html("");
+    	gallery.range = {
+    		start: 0,
+    		end: 0
     	}
 
     	gallery.showMore();
@@ -125,6 +120,18 @@ gallery.showMore = function(){
     	}
     }
     gallery.lastItem = [].slice.call(document.querySelectorAll('#grid .item')).reverse()[0];
+    if(res.reached_end === true){
+      //to test, try something like gallery.posts = gallery.posts.slice(0,50)
+      gallery.lastItem = null;
+      $("#grid").append("<div class=\"next-page\" onclick=\"gallery.nextPage()\">Next Page</div>");
+    }
+}
+
+gallery.nextPage = function(){
+  gallery.page = gallery.page + 1;
+  gallery.range = {start: 0, end: 0};
+  $("#grid").html("");
+  gallery.getGallery(gallery.page, gallery.setGallery);
 }
 
 gallery.addGalleryPost = function(post, is_album){
@@ -207,5 +214,7 @@ gallery.addGalleryPost = function(post, is_album){
 }
 
 gallery.toggleTypeSort = function(){
-  
+  if(mode === "gallery"){
+    $("#type-sort").toggle();
+  }
 }
