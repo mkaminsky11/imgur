@@ -63,3 +63,17 @@ general.timeSince = function(epoch){
 	}
 	return ret;
 }
+
+general.hover = function(){
+	if($(this).find("video").get(0).paused === true){
+		$(this).find("video").get(0).play();
+		$(this).find(".pause").css("display","none");
+	}
+}
+
+general.unhover = function(){
+	if($(this).find("video").get(0).paused === false){
+		$(this).find("video").get(0).pause();
+		$(this).find(".pause").css("display","block");
+	}
+}

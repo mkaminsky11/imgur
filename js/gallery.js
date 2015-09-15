@@ -10,6 +10,66 @@ gallery.range = {
 	end: 0
 };
 gallery.lastItem = null;
+gallery.type_sort = [
+  {
+    section: "hot",
+    name: "Hottest",
+    sort: [
+      {
+        sort: "viral",
+        name: "Most Viral"
+      },
+      {
+        sort: "top",
+        name: "Rank"
+      },
+      {
+        sort: "time",
+        name: "Newest"
+      }
+    ]
+  },
+  {
+    section: "top",
+    name: "Top",
+    sort: [
+      {
+        sort: "viral",
+        name: "Most Viral"
+      },
+      {
+        sort: "top",
+        name: "Rank"
+      },
+      {
+        sort: "time",
+        name: "Newest"
+      }
+    ]
+  },
+  {
+    section: "user",
+    name: "User",
+    sort: [
+      {
+        sort: "viral",
+        name: "Most Viral"
+      },
+      {
+        sort: "top",
+        name: "Rank"
+      },
+      {
+        sort: "time",
+        name: "Newest"
+      },
+      {
+        sort: "rising",
+        name: "Rising"
+      }
+    ]
+  }
+];
 
 gallery.getGallery = function(page, callback){
 	gallery.page = page;
@@ -87,21 +147,35 @@ gallery.addGalleryPost = function(post, is_album){
   var data = "<div class=\"data\">" + author + time + buttons + "</div>";
   var title = "<h4 class=\"title\">" + post.title + "</h4><h6>" + post.points + " points</h6>";
 
+  var pause = "<div class=\"pause\"><i class=\"fa fa-play-circle-o\"></i></div>";
 
   if(is_album === false){
+
+
     //just an image
     var video = false;
     if(post.mp4){video=true}
     var height = post.height * (240 / post.width); //proportions!
     var img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link + "\"></div>";
-    if(video==true){
-      img = "<div class=\"img\" style=\"height:"+ height + "px\"><video loop autoplay src=\""+ post.webm +"\"></video></div>";
+    var media_url = post.link;
+    if(video == true){
+      media_url = post.webm;
+      img = "<div class=\"img\" style=\"height:"+ height + "px\">" + pause + "<video loop src=\""+ post.webm +"\"></video></div>";
     }
-    var html = "<div class=\"item\" data-id=\""+ post.id +"\">" + title + img + data + "</div>";
+    var html = "<div class=\"item\" data-id=\""+ post.id +"\" data-media-url=\"" + media_url  + "\" data-video=\"" + video + "\">" + title + img + data + "</div>";
     $("#grid").append(html);
+
+    if(video === true){
+      $("#grid .item[data-id=\""+post.id+"\"]").hover(general.hover, general.unhover);
+    }
+
   }
   else{
-    var img = "<div class=\"img\"><p class=\"loading\">Loading...</p></div>";
+
+
+    //TODO: test this
+
+    var img = "<div class=\"img\"><p class=\"loading\"><i class=\"fa fa-spin fa-spinner\"></i></p></div>";
     var html = "<div class=\"item\" data-id=\""+ post.id +"\">" + title + img + data + "</div>";
     $("#grid").append(html);
 
@@ -112,12 +186,26 @@ gallery.addGalleryPost = function(post, is_album){
       if(post.mp4){video=true}
       var height = post.height * (240 / post.width); //proportions!
       var img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link + "\"></div>";
-      if(video==true){
-        img = "<div class=\"img\" style=\"height:"+ height + "px\"><video loop autoplay src=\""+ post.webm +"\"></video></div>";
+      var media_url = post.link;
+      if(video === true){
+        media_url = post.webm;
+        img = "<div class=\"img\" style=\"height:"+ height + "px\">"+ pause +"<video loop src=\""+ post.webm +"\"></video></div>";
       }
 
       var album_id = state.album_id;
-      $(".item[data-id=\""+album_id+"\"] .img").replaceWith(img);
+      $("#grid .item[data-id=\""+album_id+"\"]").attr("data-video", video);
+      $("#grid .item[data-id=\""+album_id+"\"]").attr("data-media-url", media_url);
+      $("#grid .item[data-id=\""+album_id+"\"] .img").replaceWith(img);
+
+      if(video === true){
+        $("#grid .item[data-id=\""+album_id+"\"]").hover(general.hover, general.unhover);
+      }
     });
+
+
   }
+}
+
+gallery.toggleTypeSort = function(){
+  
 }

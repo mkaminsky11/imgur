@@ -14,11 +14,12 @@ BIG TODO LIST
 + subreddits
 	- search for subreddit
 	- search within subreddit
-+ different galleries [!]
-+ comments [!]
-+ data [!]
-+ search
++ different galleries [!] -now!
++ individual posts [!]
++ comments [!] -after invidual posts
++ search -now!
 	- for posts
 	- for users (?)
 + random
++ pages [!] -after different galleries + search
 */
