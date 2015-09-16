@@ -95,6 +95,9 @@ gallery.setGallery = function(err, res, body){
     if(!err){
     	gallery.posts = json;
     	$("#grid").html("");
+      if(gallery.page > 0){
+        $("#grid").append("<div class=\"pagination flex-center\" onclick=\"gallery.prevPage()\"><span style=\"text-align:center\">Load Previous Posts...<br/><i class=\"fa fa-arrow-left\" style=\"margin-top:10px\"></i></span></div>");
+      }
     	gallery.range = {
     		start: 0,
     		end: 0
@@ -110,27 +113,37 @@ gallery.setGallery = function(err, res, body){
 gallery.showMore = function(){
 	var res = general.numPosts(gallery.posts, gallery.range);
 	gallery.range = res.range;
-    for(var i = res.range.start; i < res.range.end; i++){
-    	var post = gallery.posts[i];
-    	if(post.is_album){
-    		gallery.addGalleryPost(post, true);
-    	}
-    	else{
-    		gallery.addGalleryPost(post, false);
-    	}
+  for(var i = res.range.start; i < res.range.end; i++){
+    var post = gallery.posts[i];
+    if(post.is_album){
+      gallery.addGalleryPost(post, true);
     }
-    gallery.lastItem = [].slice.call(document.querySelectorAll('#grid .item')).reverse()[0];
-    if(res.reached_end === true){
-      //to test, try something like gallery.posts = gallery.posts.slice(0,50)
-      gallery.lastItem = null;
-      $("#grid").append("<div class=\"next-page\" onclick=\"gallery.nextPage()\">Next Page</div>");
+    else{
+      gallery.addGalleryPost(post, false);
     }
+  }
+  gallery.lastItem = [].slice.call(document.querySelectorAll('#grid .item')).reverse()[0];
+  if(res.reached_end === true){
+    //to test, try something like gallery.posts = gallery.posts.slice(0,50)
+    gallery.lastItem = null;
+    $("#grid").append("<div class=\"pagination flex-center\" onclick=\"gallery.nextPage()\"><span style=\"text-align:center\">Load More Posts...<br/><i class=\"fa fa-arrow-right\" style=\"margin-top:10px\"></i></span></div>");
+  }
 }
 
 gallery.nextPage = function(){
   gallery.page = gallery.page + 1;
   gallery.range = {start: 0, end: 0};
   $("#grid").html("");
+  gallery.getGallery(gallery.page, gallery.setGallery);
+}
+
+gallery.prevPage = function(){
+  gallery.page = gallery.page - 1;
+  gallery.range = {start:0, end:0};
+  $("#grid").html("");
+  if(gallery.page === 0){
+    $("#grid .pagination").remove();
+  }
   gallery.getGallery(gallery.page, gallery.setGallery);
 }
 
@@ -148,8 +161,7 @@ gallery.addGalleryPost = function(post, is_album){
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-arrow-up\"></i></span>";
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-arrow-down\"></i></span>";
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-heart\"></i></span>";
-  buttons += "<span class=\"btn-circle\" style=\"border: none\"><i class=\"fa fa-ellipsis-v\"></i></span>"
-  buttons += "</div>"
+  buttons += "</div>";
 
   var data = "<div class=\"data\">" + author + time + buttons + "</div>";
   var title = "<h4 class=\"title\">" + post.title + "</h4><h6>" + post.points + " points</h6>";
@@ -167,7 +179,7 @@ gallery.addGalleryPost = function(post, is_album){
     var media_url = post.link;
     if(video == true){
       media_url = post.webm;
-      img = "<div class=\"img\" style=\"height:"+ height + "px\">" + pause + "<video loop src=\""+ post.webm +"\"></video></div>";
+      img = "<div class=\"img\" style=\"height:"+ height + "px\">" + pause + "<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
     }
     var html = "<div class=\"item\" data-id=\""+ post.id +"\" data-media-url=\"" + media_url  + "\" data-video=\"" + video + "\">" + title + img + data + "</div>";
     $("#grid").append(html);
@@ -196,7 +208,7 @@ gallery.addGalleryPost = function(post, is_album){
       var media_url = post.link;
       if(video === true){
         media_url = post.webm;
-        img = "<div class=\"img\" style=\"height:"+ height + "px\">"+ pause +"<video loop src=\""+ post.webm +"\"></video></div>";
+        img = "<div class=\"img\" style=\"height:"+ height + "px\">"+ pause +"<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
       }
 
       var album_id = state.album_id;
