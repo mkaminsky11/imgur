@@ -1,32 +1,5 @@
 {
-    "main": "index.html", 
-    "description": "", 
-    "name": "imguru", 
-    "nodejs": true, 
-    "inject-js-end": "", 
-    "webkit": {
-        "page-cache": false, 
-        "java": false, 
-        "plugin": true
-    }, 
-    "window": {
-        "title": "imguru", 
-        "frame": true,
-        "height": 600, 
-        "visible": true, 
-        "toolbar": true, /* check this */ 
-        "min_width": 400, 
-        "position": "center", 
-        "show_in_taskbar": true, 
-        "width": 1200, 
-        "transparent": false
-    }, 
-    "version": "0.1.0", 
-    "snapshot": "", 
-    "node-main": "js/main.js", 
-    "keywords": [], 
-    "inject-js-start": "", 
-    "node-remote": "", 
-    "js-flags": "", 
-    "chromium-args": ""
+  "name"    : "imguru",
+  "version" : "0.1.0",
+  "main"    : "main.js"
 }

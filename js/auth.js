@@ -3,7 +3,7 @@
 var auth = {};
 auth.window = null;
 auth.login = function(){
-	if(auth.window !== null){
+	/*if(auth.window !== null){
 		auth.window.close(true);
 	}
 
@@ -21,5 +21,5 @@ auth.login = function(){
 	  	auth.window = null;
 	  	console.log(code);
 	  }
-	});
+	});*/
 }
