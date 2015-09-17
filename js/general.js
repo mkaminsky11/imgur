@@ -77,3 +77,62 @@ general.unhover = function(){
 		$(this).find(".pause").css("display","block");
 	}
 }
+
+general.toggleSearch = function(){
+	if($("#search").css("display") === "none"){
+		$("#search").css("width",0).css("display","block");
+		$("#search").velocity({
+			width: 150
+		},{
+			complete: function(){
+				$("#search").focus();
+			}
+		});
+	}
+	else{
+		$("#search").velocity({
+			width: 0
+		},{
+			complete: function(){
+				$("#search").css("display","none");
+			}
+		});
+	}
+}
+
+$("#search").keyup(function(event){
+    if(event.keyCode == 13){
+        general.searchChange();
+    }
+});
+
+general.searchChange = function(){
+	if($("#search").val().trim() === ""){
+		//no longer a search, go back to gallery
+		//TODO!
+	}
+	else{
+		gallery.user_mode = false;
+		gallery.search_mode = true;
+		general.setPanel("search");
+		//show go back to gallery
+		$("#return").css("display","block");
+		gallery.page = 0;
+		gallery.getGallery(0, gallery.setGallery);
+	}
+}
+
+general.return = function(){
+	gallery.user_mode = false;
+	gallery.search_mode = false;
+	general.setPanel("gallery");
+	gallery.page = 0;
+	$("#return").css("display","none");
+	gallery.getGallery(0, gallery.setGallery);
+	$("#search").val("");
+}
+
+general.setPanel = function(panel){
+	$("#info-panel>div").css("display","none");
+	$("#" + panel + "-panel").css("display","block");
+}

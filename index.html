@@ -17,20 +17,34 @@
 
   <div id="toolbar">
     <span class="btn bold-btn float-right" onclick="auth.login()">LOGIN</span>
+    <input class="float-right" type="text" id="search" placeholder="Search" value="" style="display:none">
+    <span class="nav-btn float-right" onclick="general.toggleSearch()"><i class="fa fa-search"></i></span>
 
-    <!--span class="nav-btn float-left" onclick="gallery.toggleTypeSort()"><i class="fa fa-th"></i></span-->
+    <span style="display:none" id="return" class="nav-btn float-left" onclick="general.return()"><i class="fa fa-th"></i></span> <!--return to gallery from user, search--><!--return to grid from post or userinfo-->
   </div>
 
   <div id="info-panel">
-    <select>
-      <option selected>Hottest</option>
-    </select>
+    <div id="gallery-panel">
+      <select id="type-select" onchange="gallery.typeChange()">
+        <option selected value="hot">Hottest</option>
+        <option value="top">Top</option>
+        <option value="user">User</option>
+      </select>
 
-    <span>pictures sorted by</span>
+      <span>posts sorted by</span>
 
-    <select>
-      <option selected>Most Viral</option>
-    </select>
+      <select id="sort-select" onchange="gallery.sortChange()">
+        <option selected value="viral">Most Viral</option>
+        <option value="top">Rank</option>
+        <option value="time">Newest</option>
+      </select>
+    </div>
+    <div id="search-panel" style="display:none">
+
+    </div>
+    <div id="user-panel" style="display:none">
+
+    </div>
   </div>
 
   <div id="main">
