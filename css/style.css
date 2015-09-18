@@ -71,20 +71,22 @@ body{
 	font-size: 15px;
 	color: #71666;
 	padding: 5px;
+	margin-right: 4px;
+	margin-left: 1px;
 }
 
 .bold-btn{
 	font-family: "arial";
 	font-weight: bold;
 	padding: 10px;
-	border-radius: 5px;
-	border: solid 1px #43A047;
-	padding-top: 5px;
-	padding-bottom: 5px;
-	color: white;
+	border-radius: 2px;
+	border: solid 2px #16E2A1;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	color: #344237;
 	font-size: 12px;
-	background-color: #4CAF50;
-	box-shadow: 0px 1px 1px rgb(148, 148, 148);
+	background-color: #12F3AA;
+	box-shadow: 0px 2px 2px rgb(148, 148, 148);
 }
 
 .float-right{

@@ -1,8 +1,7 @@
 var gallery = {};
 gallery.type = "hot"; //hot|usersub
 gallery.sort = "viral"; //viral|time
-gallery.user_mode = false; //looking at a user
-gallery.search_mode = false; //looking at a search
+gallery.mode = "gallery";
 gallery.posts = []; //array of posts
 gallery.page = 0;
 gallery.range = {
@@ -76,7 +75,7 @@ gallery.type_sort = [
 ];
 
 gallery.getGallery = function(page, callback){
-	if(gallery.user_mode === false && gallery.search_mode === false){
+	if(gallery.mode === "gallery"){
     	request({
       		url: ("https://api.imgur.com/3/gallery/"+gallery.type+"/"+gallery.sort+"/"+page+".json"),
       		headers: {
@@ -84,8 +83,7 @@ gallery.getGallery = function(page, callback){
       		}
     	}, callback);
   	}
-  	else if(gallery.user_mode === false && gallery.search_mode === true){
-    	//search mode!
+  	else if(gallery.mode === "search"){
       var _window = "";
       if(gallery.search.sort === "top"){
         _window = gallery.search.window + "/";
@@ -97,10 +95,17 @@ gallery.getGallery = function(page, callback){
         }
       }, callback);
   	}
-  	else{
-    	//if user_mode, get from user submissions to gallery
+  	else if(gallery.mode === "user"){
     	//TODO
   	}
+    else if(gallery.mode === "random"){
+      request({
+        url: ("https://api.imgur.com/3/gallery/random/random/" + page + ".json"),
+        headers: {
+          "Authorization": authorization
+        }
+      }, callback);
+    }
 }
 
 gallery.setGallery = function(err, res, body){
@@ -108,6 +113,7 @@ gallery.setGallery = function(err, res, body){
     if(!err){
     	gallery.posts = json;
     	$("#grid").html("");
+      $("#main").scrollTop(0);
       if(gallery.page > 0){
         $("#grid").append("<div class=\"pagination flex-center\" onclick=\"gallery.prevPage()\"><span style=\"text-align:center\">Load Previous Posts...<br/><i class=\"fa fa-arrow-left\" style=\"margin-top:10px\"></i></span></div>");
       }
@@ -141,9 +147,9 @@ gallery.showMore = function(){
     gallery.lastItem = null;
     //if the next page even exists
     //TODO;
-    if(gallery.nextPageExists() === true){
+    gallery.nextPageExists(function(){
       $("#grid").append("<div class=\"pagination flex-center\" onclick=\"gallery.nextPage()\"><span style=\"text-align:center\">Load More Posts...<br/><i class=\"fa fa-arrow-right\" style=\"margin-top:10px\"></i></span></div>");
-    }
+    });
   }
 }
 
@@ -151,22 +157,21 @@ gallery.nextPage = function(){
   gallery.page = gallery.page + 1;
   gallery.range = {start: 0, end: 0};
   $("#grid").html("");
+  $("#main").scrollTop(0);
   gallery.getGallery(gallery.page, gallery.setGallery);
 }
 
-gallery.nextPageExists = function(){
+gallery.nextPageExists = function(callback){
   gallery.getGallery(gallery.page + 1, function(err, res, body){
-  var json = JSON.parse(body).data;
-  if(!err){
-    if(json.length > 0){
-      return true;
+    var json = JSON.parse(body).data;
+    if(!err){
+      if(json.length > 0){
+        callback();
+      }
     }
-    return false;
-  }
-  else{
-    //something went wrong
-    return false;
-  }
+    else{
+      //something went wrong
+    }
   });
 }
 
@@ -174,6 +179,7 @@ gallery.prevPage = function(){
   gallery.page = gallery.page - 1;
   gallery.range = {start:0, end:0};
   $("#grid").html("");
+  $("#main").scrollTop(0);
   if(gallery.page === 0){
     $("#grid .pagination").remove();
   }
@@ -274,7 +280,9 @@ gallery.typeChange = function(){
       }
       $("#sort-select").html(html);
       $("#sort-select").val(first_option);
+      gallery.sort = first_option;
       gallery.page = 0;
+      gallery.range = {start:0, end: 0};
       gallery.getGallery(0, gallery.setGallery);
     }
   }
@@ -283,6 +291,7 @@ gallery.typeChange = function(){
 gallery.sortChange = function(){
   gallery.sort = $("#sort-select").val();
   gallery.page = 0;
+  gallery.range = {start:0, end: 0};
   gallery.getGallery(0, gallery.setGallery);
 }
 
@@ -295,15 +304,23 @@ gallery.searchSortChange = function(){
     $("#search-window-select").css("display","none");
   }
   gallery.page = 0;
+  gallery.range = {start:0, end: 0};
   gallery.getGallery(0, gallery.setGallery);
 }
 
 gallery.searchWindowChange = function(){
   gallery.search.window = $("#search-window-select").val();
   gallery.page = 0;
+  gallery.range = {start:0, end: 0};
   gallery.getGallery(0, gallery.setGallery);
 }
 
 gallery.random = function(){
-  
+    gallery.mode = "random";
+    general.setPanel("random");
+    //show go back to gallery
+    $("#return").css("display","block");
+    gallery.page = 0;
+    gallery.range = {start:0, end: 0};
+    gallery.getGallery(0, gallery.setGallery);
 }

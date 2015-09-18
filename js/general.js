@@ -4,7 +4,7 @@ general.numPosts = function(array, range){
 	var start = range.start;
 	var end = range.end;
 	var ideal = 10;
-	var amount_left = array.length - start;
+	var amount_left = array.length - end;
 	var num = ideal;
 	if(amount_left < ideal){
 		num = amount_left;
@@ -28,6 +28,7 @@ general.numPosts = function(array, range){
 		},
 		num: num
 	}
+	console.log(ret);
 	return ret;
 }
 
@@ -113,21 +114,21 @@ general.searchChange = function(){
 		general.return();
 	}
 	else{
-		gallery.user_mode = false;
-		gallery.search_mode = true;
+		gallery.mode = "search";
 		general.setPanel("search");
 		//show go back to gallery
 		$("#return").css("display","block");
 		gallery.page = 0;
+		gallery.range = {start:0, end: 0};
 		gallery.getGallery(0, gallery.setGallery);
 	}
 }
 
 general.return = function(){
-	gallery.user_mode = false;
-	gallery.search_mode = false;
+	gallery.mode = "gallery";
 	general.setPanel("gallery");
 	gallery.page = 0;
+	gallery.range = {start:0, end: 0};
 	$("#return").css("display","none");
 	gallery.getGallery(0, gallery.setGallery);
 	$("#search").val("");
