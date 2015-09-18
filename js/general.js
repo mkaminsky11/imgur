@@ -28,7 +28,6 @@ general.numPosts = function(array, range){
 		},
 		num: num
 	}
-	console.log(ret);
 	return ret;
 }
 
@@ -79,28 +78,6 @@ general.unhover = function(){
 	}
 }
 
-general.toggleSearch = function(){
-	if($("#search").css("display") === "none"){
-		$("#search").css("width",0).css("display","block");
-		$("#search").velocity({
-			width: 150
-		},{
-			complete: function(){
-				$("#search").focus();
-			}
-		});
-	}
-	else{
-		$("#search").velocity({
-			width: 0
-		},{
-			complete: function(){
-				$("#search").css("display","none");
-			}
-		});
-	}
-}
-
 $("#search").keyup(function(event){
     if(event.keyCode == 13){
         general.searchChange();
@@ -114,15 +91,19 @@ general.searchChange = function(){
 		general.return();
 	}
 	else{
-		gallery.mode = "search";
-		general.setPanel("search");
-		//show go back to gallery
-		$("#return").css("display","block");
-		gallery.page = 0;
-		gallery.range = {start:0, end: 0};
-		gallery.getGallery(0, gallery.setGallery);
+		if($("#search-select").val() === "all"){
+			gallery.mode = "search";
+			general.setPanel("search");
+			//show go back to gallery
+			$("#return").css("display","block");
+			gallery.page = 0;
+			gallery.range = {start:0, end: 0};
+			gallery.getGallery(0, gallery.setGallery);
+		}
 	}
 }
+
+
 
 general.return = function(){
 	gallery.mode = "gallery";
