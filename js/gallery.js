@@ -10,7 +10,7 @@ gallery.range = {
 	end: 0
 };
 gallery.search = {
-  window: "all", //if top: day|month|week|year, else remove and edit text
+  window: "all", //if top: day|month|week|year|all, else remove and edit text
   sort: "viral" //time|viral|top
 }
 gallery.lastItem = null;
@@ -274,7 +274,7 @@ gallery.typeChange = function(){
       }
       $("#sort-select").html(html);
       $("#sort-select").val(first_option);
-
+      gallery.page = 0;
       gallery.getGallery(0, gallery.setGallery);
     }
   }
@@ -282,5 +282,28 @@ gallery.typeChange = function(){
 
 gallery.sortChange = function(){
   gallery.sort = $("#sort-select").val();
+  gallery.page = 0;
   gallery.getGallery(0, gallery.setGallery);
+}
+
+gallery.searchSortChange = function(){
+  gallery.search.sort = $("#search-sort-select").val();
+  if(gallery.search.sort === "top"){
+    $("#search-window-select").css("display","inline-block");
+  }
+  else{
+    $("#search-window-select").css("display","none");
+  }
+  gallery.page = 0;
+  gallery.getGallery(0, gallery.setGallery);
+}
+
+gallery.searchWindowChange = function(){
+  gallery.search.window = $("#search-window-select").val();
+  gallery.page = 0;
+  gallery.getGallery(0, gallery.setGallery);
+}
+
+gallery.random = function(){
+  
 }

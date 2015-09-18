@@ -19,8 +19,9 @@
     <span class="btn bold-btn float-right" onclick="auth.login()">LOGIN</span>
     <input class="float-right" type="text" id="search" placeholder="Search" value="" style="display:none">
     <span class="nav-btn float-right" onclick="general.toggleSearch()"><i class="fa fa-search"></i></span>
+    <span class="nav-btn float-right" onclick="gallery.random()"><i class="fa fa-random"></i></span>
 
-    <span style="display:none" id="return" class="nav-btn float-left" onclick="general.return()"><i class="fa fa-th"></i></span> <!--return to gallery from user, search--><!--return to grid from post or userinfo-->
+    <span style="display:none" id="return" class="nav-btn float-left" onclick="general.return()"><i class="fa fa-th"></i></span>
   </div>
 
   <div id="info-panel">
@@ -40,7 +41,19 @@
       </select>
     </div>
     <div id="search-panel" style="display:none">
-
+      <select id="search-window-select" style="display:none" onchange="gallery.searchWindowChange()">
+        <option selected value="all">All Time</option>
+        <option value="day">Today's</option>
+        <option value="week">This Week's</option>
+        <option value="month">This Month's</option>
+        <option value="year">This Year's</option>
+      </select>
+      <span>posts sorted by</span>
+      <select id="search-sort-select" onchange="gallery.searchSortChange()">
+        <option selected value="viral">Most Viral</option>
+        <option value="top">Rank</option>
+        <option value="time">Newest</option>
+      </select>
     </div>
     <div id="user-panel" style="display:none">
 

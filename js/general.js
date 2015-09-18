@@ -110,6 +110,7 @@ general.searchChange = function(){
 	if($("#search").val().trim() === ""){
 		//no longer a search, go back to gallery
 		//TODO!
+		general.return();
 	}
 	else{
 		gallery.user_mode = false;
