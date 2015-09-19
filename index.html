@@ -62,12 +62,15 @@
         <option value="time">Newest</option>
       </select>
     </div>
-    <div id="user-panel" style="display:none">
+    <div id="user-panel" style="display:none;justify-content:center">
+      <span class="panel-btn panel-btn-active"><i class="fa fa-picture-o"></i></span>
+      <span class="panel-btn"><i class="fa fa-heart-o"></i></span>
+      <span class="panel-btn"><i class="fa fa-comments-o"></i></span>
+    </div>
+  </div>
 
-    </div>
-    <div id="random-panel" style="display:none">
-      <span>now browsing random posts</span>
-    </div>
+  <div id="info-panel-2" style="display:none">
+
   </div>
 
   <div id="main">
@@ -75,8 +78,16 @@
     <div id="single" style="display:none"></div>
   </div>
 
+  <div id="error-overlay" class="flex-center" style="display:none">
+    <div>
+      <h6></h6>
+      <span class="btn bold-btn" onclick="error.closeError()">OK</span>
+    </div>
+  </div>
+
   <script src="js/global.js"></script>
   <script src="js/general.js"></script>
+  <script src="js/error.js"></script>
   <script src="js/account.js"></script>
   <script src="js/auth.js"></script>
   <script src="js/gallery.js"></script>

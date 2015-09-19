@@ -12,6 +12,9 @@ gallery.search = {
   window: "all", //if top: day|month|week|year|all, else remove and edit text
   sort: "viral" //time|viral|top
 }
+gallery.user = {
+  name: null
+}
 gallery.lastItem = null;
 gallery.type_sort = [
   {
@@ -111,7 +114,7 @@ gallery.getGallery = function(page, callback){
 gallery.setGallery = function(err, res, body){
 	var json = JSON.parse(body).data;
     if(!err){
-    	gallery.posts = json;
+      gallery.posts = json;
     	$("#grid").html("");
       $("#main").scrollTop(0);
       if(gallery.page > 0){
@@ -146,7 +149,7 @@ gallery.showMore = function(){
     //to test, try something like gallery.posts = gallery.posts.slice(0,50)
     gallery.lastItem = null;
     //if the next page even exists
-    //TODO;
+    //TODO:
     gallery.nextPageExists(function(){
       $("#grid").append("<div class=\"pagination flex-center\" onclick=\"gallery.nextPage()\"><span style=\"text-align:center\">Load More Posts...<br/><i class=\"fa fa-arrow-right\" style=\"margin-top:10px\"></i></span></div>");
     });

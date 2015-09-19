@@ -100,6 +100,22 @@ general.searchChange = function(){
 			gallery.range = {start:0, end: 0};
 			gallery.getGallery(0, gallery.setGallery);
 		}
+		else if($("#search-select").val() === "user"){
+			account.userExists($("#search").val().trim(), function(res){
+				if(res.exists === true){
+					gallery.mode = "user";
+					general.setPanel("user");
+					gallery.user.name = $("#search").val().trim();
+					gallery.page = 0;
+					gallery.range = {start:0, end:0};
+					$("#return").css("display","block");
+					account.set($("#search").val().trim())
+				}
+				else{
+					error.showError("User not found!");
+				}
+			});
+		}
 	}
 }
 
@@ -117,5 +133,28 @@ general.return = function(){
 
 general.setPanel = function(panel){
 	$("#info-panel>div").css("display","none");
-	$("#" + panel + "-panel").css("display","block");
+	$("#info-panel-2").css("display","none");
+	if(panel === "random"){
+	}
+	else{
+		$("#" + panel + "-panel").css("display","flex");
+	}
+
+	if(panel === "user"){
+		$("#info-panel-2").css("display","flex");
+	}
+}
+
+
+general.intWithCommas = function(integer){
+	integer = integer + "";
+	integer = integer.split("").reverse().join("");
+	var ret = "";
+	for(var i = 0; i < integer.length; i++){
+		ret = integer[i] + ret;
+		if((i + 1) < integer.length && (i + 1)%3 === 0){
+			ret = "," + ret;
+		}
+	}
+	return ret;
 }
