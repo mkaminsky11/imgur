@@ -158,3 +158,11 @@ general.intWithCommas = function(integer){
 	}
 	return ret;
 }
+
+general.months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+general.dateFromEpoch = function(epoch){
+	var d = new Date(0);
+	d.setUTCSeconds(epoch);
+	return general.months[d.getMonth()] + " " + d.getDate() + "," + d.getFullYear();
+}

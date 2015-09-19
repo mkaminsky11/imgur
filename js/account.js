@@ -48,13 +48,52 @@ account.set = function(username){
 	*/
 
 	$("#info-panel-2").html("");
-	account.getInfo = function(username, function(err, res, body){
+	account.getInfo(username, function(err, res, body){
 		var user = JSON.parse(body).data;
 		if(user.bio === null){
 			user.bio = username + " does not have a bio";
 		}
-		var html = "<div>" + "<h6>" + username + "</h6>" + "<pre>" + user.bio + "</pre></div><div>" + 
+		var repInfo = account.getRepInfo(user.reputation);
+		var created = general.dateFromEpoch(user.created);
+		console.log(created);
+		//user.created
+		var html = "<div>" + "<h6>" + username + "</h6>" + "<pre>" + user.bio + "</pre></div><div>";
+		$("#info-panel-2").html(html);
 	});
+}
+
+account.getRepInfo = function(rep){
+	var curr = "";
+	var left = "";
+	var right = "";
+	var per = 0;
+	if(rep <= account.notoriety[0].max){
+		per = 100;
+		curr = account.notoriety[0].name;
+		right = curr;
+	}
+	else if(rep >= account.notoriety[account.notoriety.length - 1].min){
+		per = 100;
+		curr = account.notoriety[account.notoriety.length - 1].name;
+		left = curr;
+	}
+	else{
+		for(var i = 1; i < (account.notoriety.length - 1); i++){
+			if(rep >= account.notoriety[i].min && rep <= account.notoriety[i].max){
+				curr = account.notoriety[i].name;
+				left = curr;
+				right = account.notoriety[i+1].name;
+				var to_go = rep - account.notoriety[i+1].min;
+				per = (1 + to_go / (account.notoriety[i + 1].min - account.notoriety[i].min))
+			}
+		}
+	}
+	return {
+		current: curr,
+		left: left,
+		right: right,
+		per: per
+	}
 }
 
 account.notoriety = [
@@ -94,7 +133,7 @@ account.notoriety = [
 	},
 	{
 		min: 20000,
-		max: 29999
+		max: 29999,
 		name: "Glorious"
 	},
 	{
