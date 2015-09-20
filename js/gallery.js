@@ -199,7 +199,7 @@ gallery.addGalleryPost = function(post, is_album){
   }
 
   var time = "<i class=\"fa fa-clock-o\"></i>" + general.timeSince(post.datetime) + "</h6>";
-  var buttons = "<div class=\"flex-center\" style=\"margin-top: 10px\">";
+  var buttons = "<div class=\"flex-center\" style=\"margin-top: 5px\">";
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-arrow-down\"></i></span>";
     buttons += "<span class=\"btn-circle btn-circle-large\"><i class=\"fa fa-arrow-up\"></i></span>";
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-heart\"></i></span>";

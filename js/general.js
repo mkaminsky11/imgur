@@ -171,6 +171,7 @@ general.return = function(){
 general.setPanel = function(panel){
 	$("#info-panel>div").css("display","none");
 	$("#info-panel-2").css("display","none");
+	$("#info-panel-2>div").css("display","none");
 	if(panel === "random"){
 	}
 	else{
@@ -179,6 +180,7 @@ general.setPanel = function(panel){
 
 	if(panel === "user"){
 		$("#info-panel-2").css("display","flex");
+		$("#user-panel-2").css("display","flex");
 	}
 }
 

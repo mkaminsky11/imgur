@@ -39,27 +39,25 @@ account.set = function(username){
 	//already -> name
 	//account-base -> created, reputation, bio
 
-	$("#info-panel-2").html("");
+	$("#user-panel-2").html("");
 	account.getInfo(username, function(err, res, body){
 		var user = JSON.parse(body).data;
-		//if(user.bio === null){
-		//	user.bio = "";
-		//}
-		//else{
+		if(user.bio === null){
+			user.bio = "";
+		}
+		else{
 			user.bio = "<pre>" + user.bio + "</pre>"
-		//}
-
-		user.bio = "";
+		}
 
 
 		var repInfo = account.getRepInfo(user.reputation);
 		var created = general.dateFromEpoch(user.created);
 		//user.created
-		var html = "<div style=\"display:flex;justify-content:center;align-items:center;align-content:center\">" + "<h6>" + username + "</h6>" + user.bio + "</div><div>";
+		var html = "<h6>" + username + "</h6>" + user.bio;
 		html += "<h5>" + "<span>" + general.intWithCommas(user.reputation) + "</span> reputation</h5>";
 		html += "<div class=\"progress-bar\"><span>" + repInfo.left + "</span><div><div style=\"width:"+repInfo.per+"%\"></div></div><span>" + repInfo.right + "</span></div>";
-		html += "<h4>created " + created + "</h4></div>";
-		$("#info-panel-2").html(html);
+		html += "<h4>created " + created + "</h4>";
+		$("#user-panel-2").html(html);
 	});
 }
 

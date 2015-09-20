@@ -19,7 +19,7 @@ body, html{
 	background-color: #FAFAFA;
 }
 
-#info-panel, #info-panel-2{
+#info-panel{
 	padding: 10px;
 	position: relative;
 	width: calc(100% - 20px);
@@ -32,56 +32,7 @@ body, html{
 
 #info-panel{
 	height: 35px;
-}
-
-#info-panel-2{
-	display: flex;
-	flex-wrap: none;
-	border-bottom: solid thin #403E3E;
-}
-
-#info-panel-2>div{
-	flex: 1;
-	padding-left: 5px;
-    padding-right: 5px;
-}
-
-#info-panel-2 h6{
-	margin: 0;
-    font-size: 23px;
-    overflow-wrap: break-word;
-    padding: 5px;
-    border-bottom: solid 2px #12F3AA;
-}
-
-#info-panel-2 h5{
-	margin: 0;
-    margin-bottom: 7px;
-    font-size: 12px;
-    color: #eee;
-    overflow-wrap: break-word;
-}
-
-#info-panel-2 h4{
-	margin: 0;
-    font-size: 13px;
-    margin-top: 10px;
-    color: white;
-    overflow-wrap: break-word;
-}
-
-#info-panel-2 pre{
-	padding: 10px;
-    width: calc(100% - 20px);
-    margin: 0;
-    max-height: 60px;
-    background-color: #3E3D3D;
-    border-radius: 5px;
-    font-size: 12px;
-    font-family: "Arial";
-    color: #eee;
-    overflow-wrap: break-word;
-    overflow-y: auto;
+	border-bottom: solid 1px #212121;
 }
 
 .progress-bar{
@@ -138,8 +89,10 @@ body, html{
 	position: relative;
 	width: 100%;
 	overflow-x: hidden;
-	overflow-y: auto;
+	overflow-y: hidden;
 	flex: auto;
+	display: flex;
+	flex-wrap: nowrap;
 }
 
 .nav-btn{
@@ -186,10 +139,11 @@ body, html{
 }
 
 #grid, #single{
-	width: calc(100% - 40px);
+	width: calc(100% - 20px);
 	height: auto;
 	position: relative;
-	padding: 20px;
+	padding: 10px;
+	overflow: auto;
 }
 
 #grid{
@@ -202,20 +156,19 @@ body, html{
 
 #grid .item{
 	width: 240px;
-	height: auto;
-	background-color: white;
-	border-radius: 3px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	position: relative;
-	list-style: none;
-	margin-left: 3px;
-	margin-right: 3px;
-	border: solid 10px white;
-
-	display: flex;
-	flex-wrap: wrap;
-	list-style: none;
+    height: auto;
+    background-color: #333333;
+    border-radius: 3px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    position: relative;
+    list-style: none;
+    margin-left: 3px;
+    margin-right: 3px;
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 10px;
 }
 
 #grid .item>*{
@@ -241,6 +194,7 @@ body, html{
 	overflow: hidden;
 	position: relative;
 	max-height: 200px !important;
+	margin-top: 5px;
 }
 
 #grid .item .img .pause{
@@ -262,7 +216,7 @@ body, html{
 }
 
 #grid .item .data{
-	margin-top: 15px;
+	margin-top: 5px;
 	word-break: break-all;
 	font-size: 11px;
 	color: #5C5C5C;
@@ -310,7 +264,7 @@ body, html{
 	-webkit-line-clamp: 3;
 	overflow: hidden;
 	text-overflow: ellipsis;
-	color: rgb(84,84,84);
+	color: #CECECE;
 	display: -webkit-box;
 	-webkit-box-orient: vertical;
 	max-height: 62px;
@@ -322,17 +276,14 @@ body, html{
 
 #grid .item h6{
 	margin: 0;
-	margin-top: -10px;
-	margin: 0;
 	font-size: 12px;
-	margin-bottom: 9px;
 	color: #A0A0A0;
 	font-weight: normal;
 }
 
 #grid .item span.user{
 	font-weight: bold;
-	color: rgb(53, 143, 176);
+	color: rgb(128, 177, 164);
 }
 
 .btn-circle{
@@ -345,11 +296,10 @@ body, html{
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	color: #524E4E;
+	color: #5D5B5B;
 	margin-left: 2px;
 	margin-right: 2px;
-	background-color: #F7F7F7;
-	box-shadow: 0px 2px 4px #BBB9B9;
+	background-color: #212121;
 }
 
 .btn-circle-large{
@@ -465,4 +415,24 @@ body, html{
     height: 100%;
     margin-left: 5px;
     margin-right: 5px;
+}
+
+#info-panel-2{
+	flex: 235px;
+	overflow: auto;
+}
+
+#info-panel-2>div{
+	display: flex;
+    width: 100%;
+    height:100%;
+    padding: 5px;
+    margin: 5px;
+    background-color: #212121;
+    border-radius: 3px;
+    flex-direction: column;
+}
+
+#user-panel-2{
+
 }
