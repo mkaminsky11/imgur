@@ -39,25 +39,27 @@ account.set = function(username){
 	//already -> name
 	//account-base -> created, reputation, bio
 
-	/*
-
-	OCEALOT            | 12,000 rep
-	|ocealot 		 | | created may 2, 2012
-	|has not posted bio		 | | idolized (12,000 until blah)
-
-	*/
-
 	$("#info-panel-2").html("");
 	account.getInfo(username, function(err, res, body){
 		var user = JSON.parse(body).data;
-		if(user.bio === null){
-			user.bio = username + " does not have a bio";
-		}
+		//if(user.bio === null){
+		//	user.bio = "";
+		//}
+		//else{
+			user.bio = "<pre>" + user.bio + "</pre>"
+		//}
+
+		user.bio = "";
+
+
 		var repInfo = account.getRepInfo(user.reputation);
 		var created = general.dateFromEpoch(user.created);
 		console.log(created);
 		//user.created
-		var html = "<div>" + "<h6>" + username + "</h6>" + "<pre>" + user.bio + "</pre></div><div>";
+		var html = "<div style=\"display:flex;justify-content:center;align-items:center;align-content:center\">" + "<h6>" + username + "</h6>" + user.bio + "</div><div>";
+		html += "<h5>" + "<span>" + general.intWithCommas(user.reputation) + "</span> reputation</h5>";
+		html += "<div class=\"progress-bar\"><span>" + repInfo.left + "</span><div><div style=\"width:"+repInfo.per+"%\"></div></div><span>" + repInfo.right + "</span></div>";
+		html += "<h4>created " + created + "</h4></div>";
 		$("#info-panel-2").html(html);
 	});
 }
@@ -84,7 +86,7 @@ account.getRepInfo = function(rep){
 				left = curr;
 				right = account.notoriety[i+1].name;
 				var to_go = rep - account.notoriety[i+1].min;
-				per = (1 + to_go / (account.notoriety[i + 1].min - account.notoriety[i].min))
+				per = (1 + to_go / (account.notoriety[i + 1].min - account.notoriety[i].min)) * 100;
 			}
 		}
 	}
