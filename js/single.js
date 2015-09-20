@@ -15,9 +15,8 @@ single.open = function(id){
 	$("#single").css("display","flex");
 	$("#single-info").html("");
 
-	general.getImageInfo(id, function(err, res, body){
+	general.getGalleryImageInfo(id, function(err, res, body){
 		var post = JSON.parse(body).data;
-		console.log(post);
 		var info = "<h6 class=\"title\">" + post.title + "</h6>";
 		$("#single-info").html(info);
 	});

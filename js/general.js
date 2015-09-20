@@ -51,6 +51,26 @@ general.getImageInfo = function(id, callback){
   	}, callback);
 }
 
+general.getGalleryImageInfoWithState = function(id, state, callback){
+	request({
+    	url: "https://api.imgur.com/3/gallery/image/" + id,
+    	headers: {
+    	  "Authorization": authorization
+    	}
+  	}, function(err, res, body){
+  		callback(err, res, body, state);
+  	});
+}
+
+general.getGalleryImageInfo = function(id, callback){
+	request({
+    	url: "https://api.imgur.com/3/gallery/image/" + id,
+    	headers: {
+    	  "Authorization": authorization
+    	}
+  	}, callback);
+}
+
 general.times = [
 	[60, "minutes"],
 	[60*60, "hours"],

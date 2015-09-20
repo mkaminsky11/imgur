@@ -15,9 +15,8 @@ body, html{
 	padding: 10px;
 	position: relative;
 	width: calc(100% - 20px);
-	height: 25px;
+	height: 27px;
 	background-color: #FAFAFA;
-	height: 35px;
 }
 
 #info-panel, #info-panel-2{
