@@ -206,7 +206,7 @@ gallery.addGalleryPost = function(post, is_album){
   buttons += "</div>";
 
   var data = "<div class=\"data\">" + author + time + buttons + "</div>";
-  var title = "<h4 class=\"title\">" + post.title + "</h4><h6>" + post.points + " points</h6>";
+  var title = "<h4 class=\"title\" onclick=\"single.open('"+post.id+"')\">" + post.title + "</h4><h6>" + post.points + " points</h6>";
 
   var pause = "<div class=\"pause\"><i class=\"fa fa-play-circle-o\"></i></div>";
 

@@ -122,13 +122,21 @@ general.searchChange = function(){
 
 
 general.return = function(){
-	gallery.mode = "gallery";
-	general.setPanel("gallery");
-	gallery.page = 0;
-	gallery.range = {start:0, end: 0};
-	$("#return").css("display","none");
-	gallery.getGallery(0, gallery.setGallery);
-	$("#search").val("");
+	if(mode === "single"){
+		mode = "gallery";
+		single.close();
+		if(gallery.mode === "gallery"){
+			$("#return").css("display","none");
+		}
+	}
+	else{
+		gallery.mode = "gallery";
+		general.setPanel("gallery");
+		gallery.page = 0;
+		gallery.range = {start:0, end: 0};
+		$("#return").css("display","none");
+		gallery.getGallery(0, gallery.setGallery);
+	}
 }
 
 general.setPanel = function(panel){
@@ -137,7 +145,7 @@ general.setPanel = function(panel){
 	if(panel === "random"){
 	}
 	else{
-		$("#" + panel + "-panel").css("display","flex");
+		$("#" + panel + "-panel").css("display","block");
 	}
 
 	if(panel === "user"){

@@ -54,7 +54,6 @@ account.set = function(username){
 
 		var repInfo = account.getRepInfo(user.reputation);
 		var created = general.dateFromEpoch(user.created);
-		console.log(created);
 		//user.created
 		var html = "<div style=\"display:flex;justify-content:center;align-items:center;align-content:center\">" + "<h6>" + username + "</h6>" + user.bio + "</div><div>";
 		html += "<h5>" + "<span>" + general.intWithCommas(user.reputation) + "</span> reputation</h5>";
