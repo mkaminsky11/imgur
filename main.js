@@ -12,7 +12,12 @@ app.on('window-all-closed', function() {
 
 app.on('ready', function() {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 1600, height: 1000});
+  mainWindow = new BrowserWindow({
+    width: 1600, 
+    height: 1000,
+    "min-width": 350,
+    "min-height": 400
+  });
 
   // and load the index.html of the app.
   mainWindow.loadUrl('file://' + __dirname + '/index.html');

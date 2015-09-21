@@ -17,6 +17,7 @@ body, html{
 	width: calc(100% - 20px);
 	height: 27px;
 	background-color: #FAFAFA;
+	flex: 0 0 27px;
 }
 
 #info-panel{
@@ -28,6 +29,7 @@ body, html{
 	text-align: center;
 	color: white;
 	font-size: 15px;
+	flex: 0 0 27px;
 }
 
 #info-panel{
@@ -41,7 +43,8 @@ body, html{
 }
 
 .progress-bar span{
-    font-size: 11px;
+    font-size: 9px;
+    margin-top: 1px;
     color: #eee;
 }
 
@@ -197,6 +200,17 @@ body, html{
 	margin-top: 5px;
 }
 
+#grid .item .img .album{
+	position: absolute;
+    z-index: 3;
+    padding: 5px;
+    border-radius: 3px;
+    top: 2px;
+    color: white;
+    left: 2px;
+    background-color: #12F3AA;
+}
+
 #grid .item .img .pause{
 	position: absolute;
 	z-index: 2;
@@ -283,7 +297,7 @@ body, html{
 
 #grid .item span.user{
 	font-weight: bold;
-	color: rgb(128, 177, 164);
+	color: rgb(18, 243, 170);
 }
 
 .btn-circle{
@@ -424,15 +438,69 @@ body, html{
 
 #info-panel-2>div{
 	display: flex;
-    width: 100%;
+    width: calc(100% - 20px);
     height:100%;
     padding: 5px;
     margin: 5px;
-    background-color: #212121;
+    background-color: #333333;
     border-radius: 3px;
     flex-direction: column;
 }
 
+#info-panel-2 hr{
+	border: none;
+    margin-top: 2px;
+    margin-bottom: 10px;
+    border-bottom: solid thin #292929;
+    width: 100%;
+}
+
 #user-panel-2{
 
+}
+
+#user-panel-2 pre{
+	overflow-wrap: break-word;
+    padding: 5px;
+    background-color: #212121;
+    border-radius: 3px;
+    font-family: "Consolas";
+    font-size: 12px;
+    color: #eee;
+}
+
+#user-panel-2 h6{
+	margin: 0;
+    color: white;
+    font-size: 18px;
+    margin-top: 5px;
+    overflow-wrap: break-word;
+    width: 100%;
+    padding-bottom: 3px;
+}
+
+#user-panel-2 h5{
+	margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    overflow-wrap: break-word;
+    color: #D2D2D2;
+    font-size: 14px;
+}
+
+#user-panel-2 h5 span{
+	color: #12F3AA;
+}
+
+#user-panel-2 h4{
+	margin: 0;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    overflow-wrap: break-word;
+    color: #D2D2D2;
+    font-size: 12px;
+}
+
+#user-panel-2 h4 span{
+	color: #12F3AA;
 }

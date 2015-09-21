@@ -1,15 +1,28 @@
 var account = {};
-account.open_user = null;
+account.gallery_only = true;
 
 account.open = function(username){
-	//try to find
-		//if found, open
-		//if not, show error
+	gallery.mode = "user";
+	general.setPanel("user");
+	gallery.user.name = username;
+	gallery.page = 0;
+	gallery.range = {start:0, end:0};
+	$("#return").css("display","block");
+	account.set(username);
 }
 
 account.getInfo = function(username, callback){
 	request({
     	url: ("https://api.imgur.com/3/account/" + username),
+		headers: {
+			"Authorization": authorization
+		}
+	}, callback);
+}
+
+account.getGalleryInfo = function(username, callback){
+	request({
+    	url: ("https://api.imgur.com/3/account/" + username + "/gallery_profile"),
 		headers: {
 			"Authorization": authorization
 		}
@@ -35,10 +48,7 @@ account.userExists = function(username, callback){
 }
 
 account.set = function(username){
-	//this basically just populates #info-panel-2
-	//already -> name
-	//account-base -> created, reputation, bio
-
+	gallery.getGallery(0, gallery.setGallery);
 	$("#user-panel-2").html("");
 	account.getInfo(username, function(err, res, body){
 		var user = JSON.parse(body).data;
@@ -53,11 +63,19 @@ account.set = function(username){
 		var repInfo = account.getRepInfo(user.reputation);
 		var created = general.dateFromEpoch(user.created);
 		//user.created
-		var html = "<h6>" + username + "</h6>" + user.bio;
+		var html = "<h6>" + username + "</h6><hr/>" + user.bio;
 		html += "<h5>" + "<span>" + general.intWithCommas(user.reputation) + "</span> reputation</h5>";
-		html += "<div class=\"progress-bar\"><span>" + repInfo.left + "</span><div><div style=\"width:"+repInfo.per+"%\"></div></div><span>" + repInfo.right + "</span></div>";
-		html += "<h4>created " + created + "</h4>";
-		$("#user-panel-2").html(html);
+		html += "<div class=\"progress-bar\"><span>" + repInfo.left + "</span><div><div style=\"width:"+repInfo.per+"%\"></div></div><span>" + repInfo.right + "</span></div><br/><hr/>";
+		html += "<h5>created <span>" + created + "</span></h5><hr/>";
+		$("#user-panel-2").append(html);
+
+		account.getGalleryInfo(username, function(err, res, body){
+			var info = JSON.parse(body).data;
+			var html = "<h4>Gallery Posts: <span>" + general.intWithCommas(info.total_gallery_submissions) + "</span><h4>";
+			html += "<h4>Gallery Comments: <span>" + general.intWithCommas(info.total_gallery_comments) + "</span><h4>";
+			html += "<h4>Gallery Favorites: <span>" + general.intWithCommas(info.total_gallery_favorites) + "</span><h4>";
+			$("#user-panel-2").append(html);
+		});
 	});
 }
 
@@ -94,6 +112,8 @@ account.getRepInfo = function(rep){
 		per: per
 	}
 }
+
+
 
 account.notoriety = [
 	{

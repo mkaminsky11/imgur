@@ -10,23 +10,13 @@ BIG TODO LIST
 
 + conversations
 + subreddits
-	- search for subreddit    |-< dropdown to pick
+	- search for subreddit    |-< dropdown to pick?
 	- search within subreddit |
-+ individual posts [!]
++ individual posts [!] -NOW!
 + comments [!] -after invidual posts
 + user posts
-	- search
-	- click to open
+	- even non-gallery posts [!]
 + visuals for next/prev page
 + escape <, >, other characters
 + check during callbacks
-
-icons:
-+ return
-+ upload
-+ users
-+ reddit
-+ random
-+ search
-+ user info
 */

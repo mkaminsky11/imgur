@@ -75,7 +75,7 @@ general.times = [
 	[60, "minutes"],
 	[60*60, "hours"],
 	[60*60*24, "days"],
-	[60*60*365, "years"]
+	[60*60*24*365, "years"]
 ];
 
 general.timeSince = function(epoch){

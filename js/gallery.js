@@ -99,7 +99,22 @@ gallery.getGallery = function(page, callback){
       }, callback);
   	}
   	else if(gallery.mode === "user"){
-    	//TODO
+    	if(account.gallery_only === true){
+        request({
+          url: ("https://api.imgur.com/3/account/" + gallery.user.name + "/submissions/" + page + ".json"),
+          headers: {
+            "Authorization": authorization
+          }
+        }, callback);
+      }
+      else{
+        request({
+          url: ("https://api.imgur.com/3/account/" + gallery.user.name + "/images/" + page + ".json"),
+          headers: {
+            "Authorization": authorization
+          }
+        }, callback);
+      }
   	}
     else if(gallery.mode === "random"){
       request({
@@ -190,26 +205,22 @@ gallery.prevPage = function(){
 }
 
 gallery.addGalleryPost = function(post, is_album){
-
-
   //same for both
   var author = "<h6 class=\"info\">";
   if(post.account_url !== null){
-    author += "<span class=\"user\">" + post.account_url + "</span>";
+    author += "<span class=\"user\" onclick=\"account.open('"+ post.account_url +"')\">" + post.account_url + "</span>";
   }
 
   var time = "<i class=\"fa fa-clock-o\"></i>" + general.timeSince(post.datetime) + "</h6>";
   var buttons = "<div class=\"flex-center\" style=\"margin-top: 5px\">";
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-arrow-down\"></i></span>";
-    buttons += "<span class=\"btn-circle btn-circle-large\"><i class=\"fa fa-arrow-up\"></i></span>";
+  buttons += "<span class=\"btn-circle btn-circle-large\"><i class=\"fa fa-arrow-up\"></i></span>";
   buttons += "<span class=\"btn-circle\"><i class=\"fa fa-heart\"></i></span>";
   buttons += "</div>";
   var data = "<div class=\"data\">" + author + time + buttons + "</div>";
-  var title = "<h4 class=\"title\" onclick=\"single.open('"+post.id+"')\">" + post.title + "</h4><h6>" + post.points + " points</h6>";
+  var title = "<h4 class=\"title\" onclick=\"single.open('"+post.id+"')\">" + post.title + "</h4><h6>" + general.intWithCommas(post.points) + " points</h6>";
   var pause = "<div class=\"pause\"><i class=\"fa fa-play-circle-o\"></i></div>";
   if(is_album === false){
-
-
     //just an image
     var video = false;
     if(post.mp4){video=true}
@@ -219,8 +230,6 @@ gallery.addGalleryPost = function(post, is_album){
     if(video == true){
       media_url = post.webm;
       img = "<div class=\"img\" style=\"height:"+ height + "px\">" + pause + "<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
-      //img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\""+ post.link.replace("h.gif",".gif") + "?t=" + new Date().getMilliseconds() +"\"></div>";
-      
     }
     var html = "<div class=\"item\" data-id=\""+ post.id +"\" data-media-url=\"" + media_url  + "\" data-video=\"" + video + "\">" + title + img + data + "</div>";
     $("#grid").append(html);
@@ -228,13 +237,8 @@ gallery.addGalleryPost = function(post, is_album){
     if(video === true){
       $("#grid .item[data-id=\""+post.id+"\"]").hover(general.hover, general.unhover);
     }
-
   }
   else{
-
-
-    //TODO: test this
-
     var img = "<div class=\"img\"><p class=\"loading\"><i class=\"fa fa-spin fa-spinner\"></i></p></div>";
     var html = "<div class=\"item\" data-id=\""+ post.id +"\">" + title + img + data + "</div>";
     $("#grid").append(html);
@@ -245,12 +249,12 @@ gallery.addGalleryPost = function(post, is_album){
       var video = false;
       if(post.mp4){video=true}
       var height = post.height * (240 / post.width); //proportions!
-      var img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link + "\"></div>";
+      var img = "<div class=\"img\" style=\"height:"+ height + "px\"><i class=\"album fa fa-clone\"></i><img src=\"" + post.link + "\"></div>";
       var media_url = post.link;
       if(video === true){
         media_url = post.webm;
         //img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link.replace("h.gif",".gif") + "\"></div>";
-        img = "<div class=\"img\" style=\"height:"+ height + "px\">"+ pause +"<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
+        img = "<div class=\"img\" style=\"height:"+ height + "px\"><i class=\"album fa fa-clone\"></i>"+ pause +"<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
       }
 
       var album_id = state.album_id;
