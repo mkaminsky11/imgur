@@ -15,6 +15,27 @@ single.open = function(id){
 
 	general.getGalleryImageInfo(id, function(err, res, body){
 		var post = JSON.parse(body).data;
+		console.log(post);
+		var topbar = "<h6>" + post.title + "</h6><h5>";
+		if(post.account_url){
+			topbar += "by <span class=\"user\">" + post.account_url + "</span> ";
+		}
+		topbar += "<i class=\"fa fa-clock-o\" style=\"margin-right:5px\"></i>" + general.timeSince(post.datetime) + "</h5>";
+		var html = "";
+		var sidebar = "";
+		var per_up = 0;
+		var per_down = 0;
+		if(!(post.ups === 0 && post.downs === 0)){
+			var per_up = post.ups / (post.ups + post.downs) * 100;
+			var per_down = post.downs / (post.ups + post.downs) * 100;
+		}
+		sidebar += "<div class=\"bottom\"><h5 class=\"points\"><span class=\"green\">" + general.intWithCommas(post.points) + "</span> points</h5>";
+		sidebar += "<div class=\"progress-bar\" style=\"margin-bottom:5px;margin-top:5px\"><div><div style=\"width:"+per_up+"%;background-color:#12F3AA\"></div><div style=\"width:"+per_down+"%;background-color:#F44336\"></div></div></div>";
+		sidebar += "<h4 style=\"text-align:center\"><span class=\"up\">" + general.intWithCommas(post.ups) + "</span> | <span class=\"down\">" + general.intWithCommas(post.downs) + "</span></h6>"
+		sidebar += "</div>";
+		$("#single-panel").html(topbar);
+		$("#single").html(html);
+		$("#single-panel-2").html(sidebar);
 	});
 }
 

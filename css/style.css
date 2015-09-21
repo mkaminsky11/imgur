@@ -29,12 +29,9 @@ body, html{
 	text-align: center;
 	color: white;
 	font-size: 15px;
-	flex: 0 0 27px;
-}
-
-#info-panel{
-	height: 35px;
+	min-height: 35px;
 	border-bottom: solid 1px #212121;
+	flex: 0 0 auto;
 }
 
 .progress-bar{
@@ -62,7 +59,7 @@ body, html{
 	position: relative;
     height: 12px;
     background-color: #12F3AA;
-    border-radius: 6px;
+    float: left;
 }
 
 #info-panel select{
@@ -295,7 +292,7 @@ body, html{
 	font-weight: normal;
 }
 
-#grid .item span.user{
+span.user{
 	font-weight: bold;
 	color: rgb(18, 243, 170);
 }
@@ -432,15 +429,14 @@ body, html{
 }
 
 #info-panel-2{
-	flex: 235px;
+	flex: 400px;
 	overflow: auto;
 }
 
 #info-panel-2>div{
 	display: flex;
-    width: calc(100% - 20px);
+    width: calc(100% - 10px);
     height:100%;
-    padding: 5px;
     margin: 5px;
     background-color: #333333;
     border-radius: 3px;
@@ -455,6 +451,19 @@ body, html{
     width: 100%;
 }
 
+#info-panel-2 .top{
+	background-color: #1B1B1B;
+	padding: 5px;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+}
+
+#info-panel-2 .bottom{
+	padding: 5px;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+}
+
 #user-panel-2{
 
 }
@@ -462,14 +471,15 @@ body, html{
 #user-panel-2 pre{
 	overflow-wrap: break-word;
     padding: 5px;
-    background-color: #212121;
+    background-color: #1B1B1B;
     border-radius: 3px;
-    font-family: "Consolas";
+    font-family: "Arial";
     font-size: 12px;
     color: #eee;
+    margin: 0;
 }
 
-#user-panel-2 h6{
+#info-panel-2 h6{
 	margin: 0;
     color: white;
     font-size: 18px;
@@ -479,28 +489,66 @@ body, html{
     padding-bottom: 3px;
 }
 
-#user-panel-2 h5{
+#info-panel-2 h5{
 	margin: 0;
     margin-top: 10px;
     margin-bottom: 10px;
     overflow-wrap: break-word;
     color: #D2D2D2;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: normal;
 }
 
-#user-panel-2 h5 span{
-	color: #12F3AA;
+#info-panel-2 h5 span{
+	/*color: #12F3AA;*/
+	font-weight: bold;
 }
 
-#user-panel-2 h4{
+#info-panel-2 h4{
 	margin: 0;
     margin-top: 3px;
     margin-bottom: 3px;
     overflow-wrap: break-word;
     color: #D2D2D2;
     font-size: 12px;
+    font-weight: normal;
 }
 
-#user-panel-2 h4 span{
+#info-panel-2 h4 span{
+	/*color: #12F3AA;*/
+	font-weight: bold;
+}
+
+#single-panel h6{
+	margin: 0;
+    font-size: 14px;
+    text-align: left;
+    padding: 3px;
+    overflow-wrap: break-word;
+}
+#single-panel h5{
+	margin: 0;
+    text-align: left;
+    padding: 3px;
+    padding-top: 0px;
+    font-weight: normal;
+    color: #eee;
+}
+
+#single-panel-2 .points{
+	font-size: 17px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+
+#single-panel-2 .up{
+	color: #12F3AA;
+}
+
+#single-panel-2 .down{
+	color: #F44336;
+}
+
+.green{
 	color: #12F3AA;
 }

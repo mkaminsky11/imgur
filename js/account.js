@@ -51,6 +51,7 @@ account.set = function(username){
 	gallery.getGallery(0, gallery.setGallery);
 	$("#user-panel-2").html("");
 	account.getInfo(username, function(err, res, body){
+		$("#user-panel-2").html("");
 		var user = JSON.parse(body).data;
 		if(user.bio === null){
 			user.bio = "";
@@ -61,20 +62,29 @@ account.set = function(username){
 
 
 		var repInfo = account.getRepInfo(user.reputation);
+		var curr_rep = repInfo.left;
+		if(curr_rep === ""){
+			curr_rep = repInfo.right;
+		}
 		var created = general.dateFromEpoch(user.created);
 		//user.created
-		var html = "<h6>" + username + "</h6><hr/>" + user.bio;
-		html += "<h5>" + "<span>" + general.intWithCommas(user.reputation) + "</span> reputation</h5>";
-		html += "<div class=\"progress-bar\"><span>" + repInfo.left + "</span><div><div style=\"width:"+repInfo.per+"%\"></div></div><span>" + repInfo.right + "</span></div><br/><hr/>";
-		html += "<h5>created <span>" + created + "</span></h5><hr/>";
+		var html = "<div class=\"top\"><h6>" + username + "</h6></div><div class=\"bottom\">";
+		html += "<h5>" + "<span class=\"green\">" + general.intWithCommas(user.reputation) + "</span> reputation</h5>";
+		html += user.bio;
+		html += "<h5>Notoriety: <span>" + curr_rep + "</span></h5>";
+		if(repInfo.to_go !== null){
+			html += "<div class=\"progress-bar\" style=\"margin-bottom:10px\"><div><div style=\"width:"+repInfo.per+"%\"></div></div></div>";
+			html += "<h4>" + general.intWithCommas(repInfo.to_go) + " left until <span>" + repInfo.right + "</span><h4>";
+		}
+		html += "<hr/><h4>created <span>" + created + "</span></h4></div>";
 		$("#user-panel-2").append(html);
 
 		account.getGalleryInfo(username, function(err, res, body){
 			var info = JSON.parse(body).data;
-			var html = "<h4>Gallery Posts: <span>" + general.intWithCommas(info.total_gallery_submissions) + "</span><h4>";
-			html += "<h4>Gallery Comments: <span>" + general.intWithCommas(info.total_gallery_comments) + "</span><h4>";
-			html += "<h4>Gallery Favorites: <span>" + general.intWithCommas(info.total_gallery_favorites) + "</span><h4>";
-			$("#user-panel-2").append(html);
+			var html = "<h4>" + general.intWithCommas(info.total_gallery_submissions) + " gallery posts</h4>";
+			html += "<h4>" + general.intWithCommas(info.total_gallery_comments) + " gallery comments</h4>";
+			html += "<h4>" + general.intWithCommas(info.total_gallery_favorites) + " gallery favorites</h4>";
+			$("#user-panel-2 .bottom").append(html);
 		});
 	});
 }
@@ -84,6 +94,7 @@ account.getRepInfo = function(rep){
 	var left = "";
 	var right = "";
 	var per = 0;
+	var to_go = null;
 	if(rep <= account.notoriety[0].max){
 		per = 100;
 		curr = account.notoriety[0].name;
@@ -100,8 +111,9 @@ account.getRepInfo = function(rep){
 				curr = account.notoriety[i].name;
 				left = curr;
 				right = account.notoriety[i+1].name;
-				var to_go = rep - account.notoriety[i+1].min;
+				to_go = rep - account.notoriety[i+1].min;
 				per = (1 + to_go / (account.notoriety[i + 1].min - account.notoriety[i].min)) * 100;
+				to_go *= -1;
 			}
 		}
 	}
@@ -109,7 +121,8 @@ account.getRepInfo = function(rep){
 		current: curr,
 		left: left,
 		right: right,
-		per: per
+		per: per,
+		to_go: to_go
 	}
 }
 
