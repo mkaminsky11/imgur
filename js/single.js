@@ -15,13 +15,27 @@ single.open = function(id){
 
 	general.getGalleryImageInfo(id, function(err, res, body){
 		var post = JSON.parse(body).data;
-		console.log(post);
 		var topbar = "<h6>" + post.title + "</h6><h5>";
 		if(post.account_url){
 			topbar += "by <span class=\"user\">" + post.account_url + "</span> ";
 		}
 		topbar += "<i class=\"fa fa-clock-o\" style=\"margin-right:5px\"></i>" + general.timeSince(post.datetime) + "</h5>";
+		
 		var html = "";
+		if(post.is_album === false){
+			if(post.description === null){
+				post.description = "";
+			}
+			else{
+				post.description = "<pre>" + post.description + "</pre>";
+			}
+			html += "<div class=\"single\"><img src=\"" + post.link + "\">"+post.description+"</div>";
+		}
+		else{
+			//TODO:
+		}
+
+
 		var sidebar = "";
 		var per_up = 0;
 		var per_down = 0;

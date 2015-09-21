@@ -438,6 +438,7 @@ span.user{
     width: calc(100% - 10px);
     height:100%;
     margin: 5px;
+    margin-top: 10px;
     background-color: #333333;
     border-radius: 3px;
     flex-direction: column;
@@ -551,4 +552,19 @@ span.user{
 
 .green{
 	color: #12F3AA;
+}
+
+.single img{
+	width: 100%;
+}
+
+.single pre{
+	padding: 5px;
+    margin: 0;
+    background-color: #212121;
+    border-radius: 3px;
+    color: #eee;
+    font-size: 12px;
+    font-family: "Arial";
+    overflow-wrap: break-word;
 }

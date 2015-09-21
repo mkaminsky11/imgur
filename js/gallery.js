@@ -225,25 +225,29 @@ gallery.addGalleryPost = function(post, is_album){
     //just an image
     var video = false;
     if(post.mp4){video=true}
-    var height = post.height * (240 / post.width); //proportions!
-    var img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link + "\"></div>";
-    var media_url = post.link;
-    if(video == true){
-      media_url = post.webm;
-      img = "<div class=\"img\" style=\"height:"+ height + "px\">" + pause + "<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
+    var icon = "";
+    if(video === true){
+      icon = "<i class=\"album fa fa-play\"></i>";
     }
+    var height = post.height * (240 / post.width); //proportions!
+    var img = "<div class=\"img\" style=\"height:"+ height + "px\">"+icon+"<img src=\"" + post.link + "\"></div>";
+    var media_url = post.link;
+    //if(video == true){
+    //  media_url = post.webm;
+    //  var img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link + "\"></div>";
+      //img = "<div class=\"img\" style=\"height:"+ height + "px\">" + pause + "<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
+    //}
     var html = "<div class=\"item\" data-id=\""+ post.id +"\" data-media-url=\"" + media_url  + "\" data-video=\"" + video + "\">" + title + img + data + "</div>";
     $("#grid").append(html);
 
-    if(video === true){
-      $("#grid .item[data-id=\""+post.id+"\"]").hover(general.hover, general.unhover);
-    }
+    //if(video === true){
+    //  $("#grid .item[data-id=\""+post.id+"\"]").hover(general.hover, general.unhover);
+    //}
   }
   else{
     var img = "<div class=\"img\"><p class=\"loading\"><i class=\"fa fa-spin fa-spinner\"></i></p></div>";
     var html = "<div class=\"item\" data-id=\""+ post.id +"\">" + title + img + data + "</div>";
     $("#grid").append(html);
-
     var cover_image = post.cover;
     general.getImageInfoWithState(cover_image, {album_id: post.id}, function(err, res, body, state){
       var post = JSON.parse(body).data; //image info
@@ -252,20 +256,20 @@ gallery.addGalleryPost = function(post, is_album){
       var height = post.height * (240 / post.width); //proportions!
       var img = "<div class=\"img\" style=\"height:"+ height + "px\"><i class=\"album fa fa-clone\"></i><img src=\"" + post.link + "\"></div>";
       var media_url = post.link;
-      if(video === true){
-        media_url = post.webm;
+      //if(video === true){
+      //  media_url = post.webm;
         //img = "<div class=\"img\" style=\"height:"+ height + "px\"><img src=\"" + post.link.replace("h.gif",".gif") + "\"></div>";
-        img = "<div class=\"img\" style=\"height:"+ height + "px\"><i class=\"album fa fa-clone\"></i>"+ pause +"<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
-      }
+      //  img = "<div class=\"img\" style=\"height:"+ height + "px\"><i class=\"album fa fa-clone\"></i>"+ pause +"<video loop src=\""+ post.webm + "?t=" + new Date().getMilliseconds() +"\"></video></div>";
+      //}
 
       var album_id = state.album_id;
       $("#grid .item[data-id=\""+album_id+"\"]").attr("data-video", video);
       $("#grid .item[data-id=\""+album_id+"\"]").attr("data-media-url", media_url);
       $("#grid .item[data-id=\""+album_id+"\"] .img").replaceWith(img);
 
-      if(video === true){
-        $("#grid .item[data-id=\""+album_id+"\"]").hover(general.hover, general.unhover);
-      }
+      //if(video === true){
+      //  $("#grid .item[data-id=\""+album_id+"\"]").hover(general.hover, general.unhover);
+      //}
     });
 
 
