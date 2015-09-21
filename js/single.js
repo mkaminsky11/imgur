@@ -8,6 +8,7 @@ single.id = null;
 
 single.open = function(id){
 	mode = "single";
+	general.setPanel("single");
 	$("#return").css("display","block");
 	$("#grid").css("display","none");
 	$("#single").css("display","flex");
@@ -18,5 +19,6 @@ single.open = function(id){
 }
 
 single.close = function(){
-	
+	$("#single").css("display","none");
+	$("#grid").css("display","flex");
 }

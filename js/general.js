@@ -116,7 +116,6 @@ $("#search").keyup(function(event){
 general.searchChange = function(){
 	if($("#search").val().trim() === ""){
 		//no longer a search, go back to gallery
-		//TODO!
 		general.return();
 	}
 	else{
@@ -154,6 +153,7 @@ general.return = function(){
 	if(mode === "single"){
 		mode = "gallery";
 		single.close();
+		general.setPanel(gallery.mode);
 		if(gallery.mode === "gallery"){
 			$("#return").css("display","none");
 		}
@@ -178,9 +178,9 @@ general.setPanel = function(panel){
 		$("#" + panel + "-panel").css("display","block");
 	}
 
-	if(panel === "user"){
+	if(panel === "user" || panel === "single"){
 		$("#info-panel-2").css("display","flex");
-		$("#user-panel-2").css("display","flex");
+		$("#"+panel+"-panel-2").css("display","flex");
 	}
 }
 
