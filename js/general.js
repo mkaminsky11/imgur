@@ -71,6 +71,16 @@ general.getGalleryImageInfo = function(id, callback){
   	}, callback);
 }
 
+
+general.getGalleryAlbumInfo = function(id, callback){
+	request({
+    	url: "https://api.imgur.com/3/gallery/album/" + id,
+    	headers: {
+    	  "Authorization": authorization
+    	}
+  	}, callback);
+}
+
 general.times = [
 	[60, "minutes"],
 	[60*60, "hours"],

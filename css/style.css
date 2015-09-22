@@ -408,24 +408,16 @@ span.user{
 }
 
 #single{
-	display: -webkit-flex; /* Safari */
- 	-webkit-flex-wrap: wrap; /* Safari 6.1+ */
-    display: flex;   
-    flex-wrap: wrap;
-    justify-content: center;
+	display: block;
     min-height: 100%;
-    display: flex;
-	flex-wrap: none;
 }
 
 #single > div{
-	flex: 1;
 	padding: 10px;
     background-color: #333333;
     border-radius: 10px;
-    height: 100%;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 5px;
+    width: calc(100% - 30px);
 }
 
 #info-panel-2{
@@ -554,7 +546,7 @@ span.user{
 	color: #12F3AA;
 }
 
-.single img{
+.single img, .single video{
 	width: 100%;
 }
 
