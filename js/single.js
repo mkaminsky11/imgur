@@ -29,7 +29,15 @@ single.open = function(id){
 			else{
 				post.description = "<pre>" + post.description + "</pre>";
 			}
-			html += "<div class=\"single\"><img src=\"" + post.link + "\">"+post.description+"</div>";
+
+			var img = "<img src=\"" + post.link + "\">";
+			if(post.mp4){
+				img = "<video preload=\"auto\" autoplay=\"autoplay\" muted=\"muted\" loop=\"loop\" webkit-playsinline=\"\">";
+                img += "<source src=\"" + post.webm + "\" type=\"video/webm\">";
+                img += "<source src=\"" + post.mp4 + "\" type=\"video/mp4\">";
+            	img += "</video>";
+			}
+			html += "<div class=\"single\">"+img+post.description+"</div>";
 		}
 		else{
 			//TODO:

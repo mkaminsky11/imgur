@@ -13,6 +13,7 @@ BIG TODO LIST
 	- search for subreddit    |-< dropdown to pick?
 	- search within subreddit |
 + individual posts [!] -NOW!
+	- TODO: ALBUMS!
 + comments [!] -after invidual posts
 + user posts
 	- even non-gallery posts [!]
