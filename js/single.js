@@ -22,6 +22,18 @@ download
 embed
 _____
 comments
+
+
++-------------------+
+|   type in comment |
++--------------numchar (140 max)
+
+# comments sorted by [Best] [expand all]
++----------------------------------------+
+| ^ person | pts | replies | when        |
+| +      commentcommentcomment  [reply]  |
+| v                                      |
++----------------------------------------+
 */
 
 single.open = function(id, album){
@@ -78,8 +90,6 @@ single.open = function(id, album){
 			sidebar += "<h4>" + general.getSize(post.bandwidth) + " of bandwidth</h4>";
 			sidebar += "</div>";
 
-			sidebar += "<div class=\"comments\">"
-			sidebar += "</div>";
 			$("#single-panel").html(topbar);
 			$("#single").html(html);
 			$("#single-panel-2").html(sidebar);
@@ -158,6 +168,12 @@ single.open = function(id, album){
 			$("#single-panel-2").html(sidebar);
 		});
 	}
+
+	comments.getComments(id, function(err, res, body){
+		var json = JSON.parse(body).data;
+		comments.setComments(json);
+		console.log(comments.comments);
+	});
 }
 
 single.close = function(){

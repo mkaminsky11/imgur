@@ -425,6 +425,7 @@ span.user{
 #info-panel-2{
 	flex: 400px;
 	overflow: auto;
+	flex-direction: column;
 }
 
 #info-panel-2>div{

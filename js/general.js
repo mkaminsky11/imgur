@@ -209,6 +209,10 @@ general.setPanel = function(panel){
 		$("#info-panel-2").css("display","flex");
 		$("#"+panel+"-panel-2").css("display","flex");
 	}
+
+	if(panel === "single"){
+		$("#comment-panel").css("display","flex");
+	}
 }
 
 

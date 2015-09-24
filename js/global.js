@@ -20,4 +20,6 @@ BIG TODO LIST
 + visuals for next/prev page
 + escape <, >, other characters
 + check during callbacks
++ tags, topics
++ report
 */
