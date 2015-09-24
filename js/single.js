@@ -8,6 +8,24 @@ single.id = null;
 single.post = null;
 single.num_shown = 0;
 
+/*
+upvote/downvote/favorite/comments
+num comments
+bandwidth
+links:
++ image (raw)
+	- gif
+	- mp4
+	- webm
+	- gifv
+open in imgur
+topics? (topic_id + topic)
+size
+download
+embed
+
+*/
+
 single.open = function(id, album){
 	single.id = id;
 	mode = "single";
@@ -30,7 +48,7 @@ single.open = function(id, album){
 				post.description = "";
 			}
 			else{
-				post.description = "<pre>" + post.description + "</pre>";
+				post.description = "<pre>" + post.description.autoLink() + "</pre>";
 			}
 			var img = "<img src=\"" + post.link + "\">";
 			if(post.mp4){
@@ -78,7 +96,7 @@ single.open = function(id, album){
 					image.description = "";
 				}
 				else{
-					image.description = "<pre>" + image.description + "</pre>";
+					image.description = "<pre>" + image.description.autoLink() + "</pre>";
 				}
 				var img = "<img src=\"" + image.link + "\">";
 				if(image.mp4){
@@ -107,6 +125,7 @@ single.open = function(id, album){
 			sidebar += "</div>";
 			$("#single-panel").html(topbar);
 			$("#single").html(html);
+			$("#single").scrollTop(0);
 			$("#single-panel-2").html(sidebar);
 		});
 	}

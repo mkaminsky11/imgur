@@ -131,7 +131,7 @@ gallery.setGallery = function(err, res, body){
     if(!err){
       gallery.posts = json;
     	$("#grid").html("");
-      $("#main").scrollTop(0);
+      $("#grid").scrollTop(0);
       if(gallery.page > 0){
         $("#grid").append("<div class=\"pagination flex-center\" onclick=\"gallery.prevPage()\"><span style=\"text-align:center\">Load Previous Posts...<br/><i class=\"fa fa-arrow-left\" style=\"margin-top:10px\"></i></span></div>");
       }
@@ -175,7 +175,7 @@ gallery.nextPage = function(){
   gallery.page = gallery.page + 1;
   gallery.range = {start: 0, end: 0};
   $("#grid").html("");
-  $("#main").scrollTop(0);
+  $("#grid").scrollTop(0);
   gallery.getGallery(gallery.page, gallery.setGallery);
 }
 
@@ -197,7 +197,7 @@ gallery.prevPage = function(){
   gallery.page = gallery.page - 1;
   gallery.range = {start:0, end:0};
   $("#grid").html("");
-  $("#main").scrollTop(0);
+  $("#grid").scrollTop(0);
   if(gallery.page === 0){
     $("#grid .pagination").remove();
   }
