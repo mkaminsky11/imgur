@@ -103,6 +103,23 @@ general.timeSince = function(epoch){
 	return ret;
 }
 
+general.size = [
+	[1000, "kB"],
+	[1000*1000, "MB"],
+	[1000*1000*1000, "GB"],
+	[1000*1000*1000*1000, "TB"]
+];
+
+general.getSize = function(bytes){
+	var ret = bytes.toFixed(2) + " bytes";
+	for(var i = 0; i < general.size.length; i++){
+		if((bytes / general.size[i][0]) > 1){
+			ret = (bytes / general.size[i][0]).toFixed(2) + general.size[i][1];
+		}
+	}
+	return ret;
+}
+
 general.hover = function(){
 	if($(this).find("video").get(0).paused === true){
 		$(this).find("video").get(0).play();

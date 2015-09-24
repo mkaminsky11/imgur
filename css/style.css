@@ -412,13 +412,14 @@ span.user{
     min-height: 100%;
 }
 
-#single > div{
+.single{
 	padding: 0px;
     background-color: #333333;
     margin: 15px;
     width: calc(100% - 30px);
     margin-top: 0px;
     margin-bottom: 0px;
+    padding-bottom: 5px;
 }
 
 #info-panel-2{
@@ -555,20 +556,53 @@ span.user{
 	padding-top: 0px;
 }
 
-.single pre{
+.single pre.image-desc{
     padding: 13px;
     margin: 0;
-    /* background-color: #212121; */
     border-radius: 3px;
     color: #BBB;
     font-size: 13px;
     font-family: "Arial";
-    overflow-wrap: break-word;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }
 
-.single pre a{
-	color: #36A9C5;
-    font-weight: bold;
+.post-desc{
+	padding: 15px;
+    background-color: #333333;
+    margin: 0px;
+    width: calc(100% - 30px);
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+    border-radius: 0px;
+}
+
+.post-desc pre{
+	padding: 13px;
+    margin: 0;
+    border-radius: 3px;
+    color: #BBB;
+    font-size: 13px;
+    font-family: "Arial";
+    background-color: #212121;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+#single pre a{
+	color: #36A9C5 !important;
+    font-weight: bold !important;
+}
+
+.single h6.image-title{
+	margin: 0;
+    padding: 10px;
+    font-size: 15px;
+    color: #E8E6E6;
+    border-top: solid thin #272626;
 }
 
 .load-more{
